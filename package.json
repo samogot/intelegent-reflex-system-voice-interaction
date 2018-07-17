@@ -1,0 +1,11 @@
+{
+  "name": "rsvi",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "sqlite": "^2.8.0"
+  }
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FUSProjectUsageTrigger">
+    <session id="1777490990">
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="groovy" value="8" />
+          <entry key="js" value="431" />
+          <entry key="sql" value="415" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Groovy" value="8" />
+          <entry key="JavaScript" value="409" />
+          <entry key="SQL" value="26" />
+          <entry key="Scratch" value="411" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="dictors" value="1" />
+          <entry key="phonemes" value="2" />
+          <entry key="reaction_phonemes" value="1" />
+          <entry key="reactions" value="3" />
+          <entry key="results" value="1" />
+          <entry key="sql" value="4" />
+          <entry key="stimul_phonemes" value="1" />
+          <entry key="stimuls" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Database Element" value="12" />
+          <entry key="Scratch" value="4" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+</project>
