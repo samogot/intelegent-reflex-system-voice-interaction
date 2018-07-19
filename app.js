@@ -569,7 +569,7 @@ function readPhonemes() {
     });
 }
 
-function computeResult() {
+function computeReactionsData() {
   return Promise.resolve()
     .then(() => db.run(`
       DELETE
@@ -597,7 +597,11 @@ function computeResult() {
     .then(() => db.run(`
       UPDATE reactions_data
       SET i_A = sqrt(d_A * d_A + 1);
-    `))
+    `));
+}
+
+function computeReactionPhonemesData() {
+  return Promise.resolve()
     .then(() => db.run(`
       DELETE
       FROM reaction_phonemes_data;
@@ -633,7 +637,11 @@ function computeResult() {
                    WHERE reactions_data.reaction_id = reaction_phonemes_data.reaction_id
                      AND reactions_data.random_block = reaction_phonemes_data.random_block
                      AND reactions_data.context_id = reaction_phonemes_data.context_id);
-    `))
+    `));
+}
+
+function computeReactionStimulsData() {
+  return Promise.resolve()
     .then(() => db.run(`
       DELETE
       FROM reaction_stimuls_data;
@@ -670,7 +678,11 @@ function computeResult() {
     .then(() => db.run(`
       UPDATE reaction_stimuls_data
       SET p_ABsum = 0.5 + d_ABsum / (2 * i_ABsum);
-    `))
+    `));
+}
+
+function computeResultData() {
+  return Promise.resolve()
     .then(() => db.run(`
       DELETE
       FROM results;
@@ -691,6 +703,14 @@ function computeResult() {
              INNER JOIN reaction_contexts ccc ON (sss.reaction_id = ccc.reaction_id)
       ORDER BY context_id, stimul_id
     `));
+}
+
+function computeData() {
+  return Promise.resolve()
+    .then(computeReactionsData)
+    .then(computeReactionPhonemesData)
+    .then(computeReactionStimulsData)
+    .then(computeResultData)
 }
 
 function getResultsTables() {
@@ -771,7 +791,7 @@ db.open('data3c.sqlite')
   // .then(createTables)
   // .then(fillModelData)
   // .then(readPhonemes)
-  // .then(computeResult)
+  .then(computeData)
   .then(getResultsTables)
   .then(showTablesJS)
   .then(showTablesLaTeX)
