@@ -643,7 +643,8 @@ function computeResult() {
       SELECT rd.random_block, rd.context_id, rd.reaction_id, sp.stimul_id, sum(dd_AB)
       FROM reactions_data rd
              INNER JOIN reaction_phonemes_data rpd
-               ON (rd.reaction_id = rpd.reaction_id AND rd.random_block = rpd.random_block AND rd.context_id = rpd.context_id)
+               ON (rd.reaction_id = rpd.reaction_id AND rd.random_block = rpd.random_block AND rd.context_id =
+                   rpd.context_id)
              INNER JOIN stimul_phonemes sp ON (rpd.phoneme_id = sp.phoneme_id)
              INNER JOIN stimuls s ON (s.stimul_id = sp.stimul_id)
              INNER JOIN reaction_contexts c ON (c.reaction_id = s.reaction_id)
@@ -657,10 +658,10 @@ function computeResult() {
     .then(() => db.run(`
       UPDATE reaction_stimuls_data
       SET d_ABsum = (SELECT dsum_A * i_A - d_A * isum_A
-                   FROM reactions_data
-                   WHERE reactions_data.reaction_id = reaction_stimuls_data.reaction_id
-                     AND reactions_data.random_block = reaction_stimuls_data.random_block
-                     AND reactions_data.context_id = reaction_stimuls_data.context_id);
+                     FROM reactions_data
+                     WHERE reactions_data.reaction_id = reaction_stimuls_data.reaction_id
+                       AND reactions_data.random_block = reaction_stimuls_data.random_block
+                       AND reactions_data.context_id = reaction_stimuls_data.context_id);
     `))
     .then(() => db.run(`
       UPDATE reaction_stimuls_data
@@ -674,22 +675,95 @@ function computeResult() {
       DELETE
       FROM results;
     `))
-  .then(() => db.run(`
-    INSERT INTO results(context_id, stimul_id, result_reaction_id)
-    SELECT context_id,
-           stimul_id,
-           (SELECT d.reaction_id
-            FROM reaction_stimuls_data d
-                   INNER JOIN stimuls s ON (d.stimul_id = s.stimul_id)
-            WHERE d.random_block = s.random_block
-              AND context_id = ccc.context_id
-              AND d.stimul_id = sss.stimul_id
-            ORDER BY context_id, s.stimul_id, p_ABsum DESC
-            LIMIT 1) AS result_reaction_id
-    FROM stimuls sss
-           INNER JOIN reaction_contexts ccc ON (sss.reaction_id = ccc.reaction_id)
-    ORDER BY context_id, stimul_id
-  `));
+    .then(() => db.run(`
+      INSERT INTO results(context_id, stimul_id, result_reaction_id)
+      SELECT context_id,
+             stimul_id,
+             (SELECT d.reaction_id
+              FROM reaction_stimuls_data d
+                     INNER JOIN stimuls s ON (d.stimul_id = s.stimul_id)
+              WHERE d.random_block = s.random_block
+                AND context_id = ccc.context_id
+                AND d.stimul_id = sss.stimul_id
+              ORDER BY context_id, s.stimul_id, p_ABsum DESC
+              LIMIT 1) AS result_reaction_id
+      FROM stimuls sss
+             INNER JOIN reaction_contexts ccc ON (sss.reaction_id = ccc.reaction_id)
+      ORDER BY context_id, stimul_id
+    `));
+}
+
+function getResultsTables() {
+  return Promise.all([
+    db.all(`
+      SELECT r.context_id,
+             round(avg(r.result_reaction_id = reaction_id) * 100, 1) persision,
+             sum(r.result_reaction_id = reaction_id)                 count,
+             count(*)                                              total
+      FROM stimuls s
+             INNER JOIN results r ON (s.stimul_id = r.stimul_id)
+      GROUP BY r.context_id
+    `),
+    db.all(`
+      SELECT context_id,
+             reaction_id,
+             (SELECT round(avg(r.result_reaction_id = reaction_id) * 100, 1)
+              FROM stimuls s
+                     INNER JOIN results r ON (s.stimul_id = r.stimul_id)
+              WHERE s.reaction_id = rrr.reaction_id
+                AND rrr.context_id = r.context_id) AS true,
+             (SELECT round(avg(r.result_reaction_id != reaction_id) * 100, 1)
+              FROM stimuls s
+                     INNER JOIN results r ON (s.stimul_id = r.stimul_id)
+              WHERE r.result_reaction_id = rrr.reaction_id
+                AND rrr.context_id = r.context_id) AS false,
+             (SELECT round(avg(s.reaction_id = rrr.reaction_id) * 100, 1)
+              FROM stimuls s
+                     INNER JOIN reaction_contexts c ON (s.reaction_id = c.reaction_id)
+              WHERE rrr.context_id = c.context_id) AS real,
+             (SELECT round(avg(r.result_reaction_id = rrr.reaction_id) * 100, 1)
+              FROM stimuls s
+                     INNER JOIN results r ON (s.stimul_id = r.stimul_id)
+              WHERE rrr.context_id = r.context_id) AS result
+      FROM reaction_contexts rrr
+      ORDER BY context_id, reaction_id
+    `)
+  ]);
+}
+
+function showTablesJS(tables) {
+  for (const t of tables)
+    console.table(t)
+  return tables;
+}
+
+function showTablesLaTeX(tables) {
+  for (const t of tables) {
+    const tex = `
+\\begin{longtable}[c]{ | ${Object.keys(t[0]).map(() => 'l').join(' | ')} | }
+	\\caption{XXX}\\label{tbl:xxx}\\\\
+	\\hline
+	${Object.keys(t[0]).join(' & ')} \\\\
+	\\hline
+	\\endfirsthead
+	
+	\\captionsetup{format=tablenocaption,labelformat=continued}\\caption[]{}\\\\
+	\\hline
+	${Object.keys(t[0]).join(' & ')} \\\\
+	\\hline
+	\\endhead
+	
+	\\hline
+	\\endfoot
+	
+	\\hline
+	\\endlastfoot
+	
+${t.map(row => `\t${Object.values(row).join(' & ')} \\\\`).join('\n\t\\hline\n')}
+\\end{longtable}%`;
+    console.log(tex);
+  }
+  return tables;
 }
 
 db.open('data3c.sqlite')
@@ -697,5 +771,8 @@ db.open('data3c.sqlite')
   // .then(createTables)
   // .then(fillModelData)
   // .then(readPhonemes)
-  .then(computeResult)
+  // .then(computeResult)
+  .then(getResultsTables)
+  .then(showTablesJS)
+  .then(showTablesLaTeX)
   .catch((e) => console.error(e));
