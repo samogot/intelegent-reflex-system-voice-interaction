@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSource name="data2.sqlite">
+<dataSource name="data2c.sqlite">
   <database-model serializer="dbm" rdbms="SQLITE" format-version="4.9">
     <root id="1">
       <ServerVersion>3.16.1</ServerVersion>
@@ -13,213 +13,347 @@
     <collation id="5" parent="1" name="RTRIM"/>
     <table id="6" parent="2" name="dictors"/>
     <table id="7" parent="2" name="phonemes"/>
-    <table id="8" parent="2" name="reaction_phonemes"/>
-    <table id="9" parent="2" name="reactions"/>
-    <table id="10" parent="2" name="results"/>
-    <table id="11" parent="2" name="sqlite_master">
+    <table id="8" parent="2" name="random_blocks"/>
+    <table id="9" parent="2" name="reaction_contexts"/>
+    <table id="10" parent="2" name="reaction_phonemes_data"/>
+    <table id="11" parent="2" name="reaction_stimuls_data"/>
+    <table id="12" parent="2" name="reactions"/>
+    <table id="13" parent="2" name="reactions_data"/>
+    <table id="14" parent="2" name="results"/>
+    <table id="15" parent="2" name="sqlite_master">
       <System>1</System>
     </table>
-    <table id="12" parent="2" name="stimul_phonemes"/>
-    <table id="13" parent="2" name="stimuls"/>
-    <column id="14" parent="6" name="dictor_id">
+    <table id="16" parent="2" name="stimul_phonemes"/>
+    <table id="17" parent="2" name="stimuls"/>
+    <column id="18" parent="6" name="dictor_id">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="15" parent="6" name="name">
+    <column id="19" parent="6" name="name">
       <Position>2</Position>
       <DataType>TEXT|0s</DataType>
     </column>
-    <index id="16" parent="6" name="sqlite_autoindex_dictors_1">
+    <index id="20" parent="6" name="sqlite_autoindex_dictors_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>name</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="17" parent="6">
+    <key id="21" parent="6">
       <ColNames>dictor_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="18" parent="6">
+    <key id="22" parent="6">
       <ColNames>name</ColNames>
       <UnderlyingIndexName>sqlite_autoindex_dictors_1</UnderlyingIndexName>
     </key>
-    <column id="19" parent="7" name="phoneme_id">
+    <column id="23" parent="7" name="phoneme_id">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="20" parent="7" name="txt">
+    <column id="24" parent="7" name="txt">
       <Position>2</Position>
       <DataType>TEXT|0s</DataType>
     </column>
-    <index id="21" parent="7" name="sqlite_autoindex_phonemes_1">
+    <index id="25" parent="7" name="sqlite_autoindex_phonemes_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>txt</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="22" parent="7">
+    <key id="26" parent="7">
       <ColNames>phoneme_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="23" parent="7">
+    <key id="27" parent="7">
       <ColNames>txt</ColNames>
       <UnderlyingIndexName>sqlite_autoindex_phonemes_1</UnderlyingIndexName>
     </key>
-    <column id="24" parent="8" name="phoneme_id">
+    <column id="28" parent="8" name="random_block">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="25" parent="8" name="reaction_id">
+    <key id="29" parent="8">
+      <ColNames>random_block</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="30" parent="9" name="reaction_id">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="31" parent="9" name="context_id">
       <Position>2</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="26" parent="8" name="count_num">
-      <Position>3</Position>
-      <DataType>INTEGER|0s</DataType>
-    </column>
-    <column id="27" parent="8" name="p_AB">
-      <Position>4</Position>
-      <DataType>REAL|0s</DataType>
-    </column>
-    <column id="28" parent="8" name="d_AB">
-      <Position>5</Position>
-      <DataType>REAL|0s</DataType>
-    </column>
-    <column id="29" parent="8" name="i_AB">
-      <Position>6</Position>
-      <DataType>REAL|0s</DataType>
-    </column>
-    <column id="30" parent="8" name="dd_AB">
-      <Position>7</Position>
-      <DataType>REAL|0s</DataType>
-    </column>
-    <index id="31" parent="8" name="sqlite_autoindex_reaction_phonemes_1">
+    <index id="32" parent="9" name="sqlite_autoindex_reaction_contexts_1">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>phoneme_id
-reaction_id</ColNames>
+      <ColNames>reaction_id
+context_id</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="32" parent="8">
-      <ColNames>phoneme_id
-reaction_id</ColNames>
+    <key id="33" parent="9">
+      <ColNames>reaction_id
+context_id</ColNames>
       <Primary>1</Primary>
-      <UnderlyingIndexName>sqlite_autoindex_reaction_phonemes_1</UnderlyingIndexName>
+      <UnderlyingIndexName>sqlite_autoindex_reaction_contexts_1</UnderlyingIndexName>
     </key>
-    <column id="33" parent="9" name="reaction_id">
+    <column id="34" parent="10" name="phoneme_id">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="34" parent="9" name="reaction_block">
+    <column id="35" parent="10" name="reaction_id">
       <Position>2</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="35" parent="9" name="txt">
+    <column id="36" parent="10" name="context_id">
       <Position>3</Position>
-      <DataType>TEXT|0s</DataType>
+      <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="36" parent="9" name="count_num">
+    <column id="37" parent="10" name="random_block">
       <Position>4</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="37" parent="9" name="p_A">
+    <column id="38" parent="10" name="count_num">
       <Position>5</Position>
-      <DataType>REAL|0s</DataType>
+      <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="38" parent="9" name="d_A">
+    <column id="39" parent="10" name="p_AB">
       <Position>6</Position>
       <DataType>REAL|0s</DataType>
     </column>
-    <column id="39" parent="9" name="i_A">
+    <column id="40" parent="10" name="d_AB">
       <Position>7</Position>
       <DataType>REAL|0s</DataType>
     </column>
-    <key id="40" parent="9">
+    <column id="41" parent="10" name="i_AB">
+      <Position>8</Position>
+      <DataType>REAL|0s</DataType>
+    </column>
+    <column id="42" parent="10" name="dd_AB">
+      <Position>9</Position>
+      <DataType>REAL|0s</DataType>
+    </column>
+    <index id="43" parent="10" name="sqlite_autoindex_reaction_phonemes_data_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>phoneme_id
+reaction_id
+context_id
+random_block</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="44" parent="10">
+      <ColNames>phoneme_id
+reaction_id
+context_id
+random_block</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_reaction_phonemes_data_1</UnderlyingIndexName>
+    </key>
+    <column id="45" parent="11" name="stimul_id">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="46" parent="11" name="reaction_id">
+      <Position>2</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="47" parent="11" name="context_id">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="48" parent="11" name="random_block">
+      <Position>4</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="49" parent="11" name="dsum_A">
+      <Position>5</Position>
+      <DataType>REAL|0s</DataType>
+    </column>
+    <column id="50" parent="11" name="isum_A">
+      <Position>6</Position>
+      <DataType>REAL|0s</DataType>
+    </column>
+    <column id="51" parent="11" name="d_ABsum">
+      <Position>7</Position>
+      <DataType>REAL|0s</DataType>
+    </column>
+    <column id="52" parent="11" name="i_ABsum">
+      <Position>8</Position>
+      <DataType>REAL|0s</DataType>
+    </column>
+    <column id="53" parent="11" name="p_ABsum">
+      <Position>9</Position>
+      <DataType>REAL|0s</DataType>
+    </column>
+    <index id="54" parent="11" name="sqlite_autoindex_reaction_stimuls_data_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>stimul_id
+reaction_id
+context_id
+random_block</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="55" parent="11">
+      <ColNames>stimul_id
+reaction_id
+context_id
+random_block</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_reaction_stimuls_data_1</UnderlyingIndexName>
+    </key>
+    <column id="56" parent="12" name="reaction_id">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="57" parent="12" name="txt">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+    </column>
+    <key id="58" parent="12">
       <ColNames>reaction_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="41" parent="10" name="stimul_id">
+    <column id="59" parent="13" name="reaction_id">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="42" parent="10" name="result_reaction_block">
+    <column id="60" parent="13" name="context_id">
       <Position>2</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <key id="43" parent="10">
-      <ColNames>stimul_id</ColNames>
+    <column id="61" parent="13" name="random_block">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="62" parent="13" name="count_num">
+      <Position>4</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="63" parent="13" name="p_A">
+      <Position>5</Position>
+      <DataType>REAL|0s</DataType>
+    </column>
+    <column id="64" parent="13" name="d_A">
+      <Position>6</Position>
+      <DataType>REAL|0s</DataType>
+    </column>
+    <column id="65" parent="13" name="i_A">
+      <Position>7</Position>
+      <DataType>REAL|0s</DataType>
+    </column>
+    <index id="66" parent="13" name="sqlite_autoindex_reactions_data_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>reaction_id
+context_id
+random_block</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="67" parent="13">
+      <ColNames>reaction_id
+context_id
+random_block</ColNames>
       <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_reactions_data_1</UnderlyingIndexName>
     </key>
-    <column id="44" parent="11" name="type">
+    <column id="68" parent="14" name="context_id">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="69" parent="14" name="stimul_id">
+      <Position>2</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="70" parent="14" name="result_reaction_id">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <index id="71" parent="14" name="sqlite_autoindex_results_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>context_id
+stimul_id</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="72" parent="14">
+      <ColNames>context_id
+stimul_id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_results_1</UnderlyingIndexName>
+    </key>
+    <column id="73" parent="15" name="type">
       <Position>1</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="45" parent="11" name="name">
+    <column id="74" parent="15" name="name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="46" parent="11" name="tbl_name">
+    <column id="75" parent="15" name="tbl_name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="47" parent="11" name="rootpage">
+    <column id="76" parent="15" name="rootpage">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
     </column>
-    <column id="48" parent="11" name="sql">
+    <column id="77" parent="15" name="sql">
       <Position>5</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="49" parent="12" name="phoneme_id">
+    <column id="78" parent="16" name="phoneme_id">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="50" parent="12" name="stimul_id">
+    <column id="79" parent="16" name="stimul_id">
       <Position>2</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="51" parent="12" name="count_num">
+    <column id="80" parent="16" name="count_num">
       <Position>3</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <index id="52" parent="12" name="sqlite_autoindex_stimul_phonemes_1">
+    <index id="81" parent="16" name="sqlite_autoindex_stimul_phonemes_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>phoneme_id
 stimul_id</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="53" parent="12">
+    <key id="82" parent="16">
       <ColNames>phoneme_id
 stimul_id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_stimul_phonemes_1</UnderlyingIndexName>
     </key>
-    <column id="54" parent="13" name="stimul_id">
+    <column id="83" parent="17" name="stimul_id">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="55" parent="13" name="txt">
+    <column id="84" parent="17" name="random_block">
       <Position>2</Position>
-      <DataType>TEXT|0s</DataType>
+      <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="56" parent="13" name="file">
+    <column id="85" parent="17" name="txt">
       <Position>3</Position>
       <DataType>TEXT|0s</DataType>
     </column>
-    <column id="57" parent="13" name="dictor_id">
+    <column id="86" parent="17" name="file">
       <Position>4</Position>
-      <DataType>INTEGER|0s</DataType>
+      <DataType>TEXT|0s</DataType>
     </column>
-    <column id="58" parent="13" name="reaction_id">
+    <column id="87" parent="17" name="dictor_id">
       <Position>5</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="59" parent="13" name="count_num">
+    <column id="88" parent="17" name="reaction_id">
       <Position>6</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <key id="60" parent="13">
+    <key id="89" parent="17">
       <ColNames>stimul_id</ColNames>
       <Primary>1</Primary>
     </key>
