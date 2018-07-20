@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 
+const db_filename = 'data3c4.sqlite';
 process.chdir('/home/samogot/Disser/Звук_дисер/txt2');
 const data = fs.readFileSync('list3.txt', 'utf-8').split('\n').map(f => ({file: f}));
 const all_opts = {};
@@ -11,8 +12,8 @@ let count_dicts = 0;
 let count_opts = 0;
 const data_opts = [];
 
-const SEQUENCE_LENGTH_MIN = 1;
-const SEQUENCE_LENGTH_MAX = 3;
+const SEQUENCE_LENGTH_MIN = 2;
+const SEQUENCE_LENGTH_MAX = 4;
 const CROSS_VALIDATION_BLOCKS = 5;
 
 function createTables() {
@@ -608,7 +609,7 @@ function computeReactionPhonemesData() {
     `))
     .then(() => db.run(`
       INSERT INTO reaction_phonemes_data(random_block, context_id, reaction_id, phoneme_id, count_num)
-      SELECT r.random_block, context_id, s.reaction_id, p.phoneme_id, sum(p.count_num)
+      SELECT r.random_block, context_id, s.reaction_id, p.phoneme_id, count(p.count_num)
       FROM stimuls s
              INNER JOIN reaction_contexts c ON (s.reaction_id = c.reaction_id)
              INNER JOIN random_blocks r ON (s.random_block != r.random_block)
@@ -719,7 +720,7 @@ function getResultsTables() {
       SELECT r.context_id,
              round(avg(r.result_reaction_id = reaction_id) * 100, 1) persision,
              sum(r.result_reaction_id = reaction_id)                 count,
-             count(*)                                              total
+             count(*)                                                total
       FROM stimuls s
              INNER JOIN results r ON (s.stimul_id = r.stimul_id)
       GROUP BY r.context_id
@@ -786,7 +787,7 @@ ${t.map(row => `\t${Object.values(row).join(' & ')} \\\\`).join('\n\t\\hline\n')
   return tables;
 }
 
-db.open('data3c.sqlite')
+db.open(db_filename)
   .then(() => db.driver.loadExtension('/home/samogot/Downloads/extension-functions'))
   // .then(createTables)
   // .then(fillModelData)
