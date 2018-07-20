@@ -4,7 +4,7 @@ const path = require('path');
 
 
 const db_filename = 'data3c4.sqlite';
-process.chdir('/home/samogot/Disser/Звук_дисер/txt2');
+process.chdir('data');
 const data = fs.readFileSync('list3.txt', 'utf-8').split('\n').map(f => ({file: f}));
 const all_opts = {};
 const all_dicts = {};
